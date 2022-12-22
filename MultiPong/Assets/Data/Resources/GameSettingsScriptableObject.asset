@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8128121b76ca3774c87fadf16f574f1e, type: 3}
+  m_Name: GameSettingsScriptableObject
+  m_EditorClassIdentifier: 
+  GameSettings:
+    WinScore: 10
+    MatchStartTimeout: 3
+    ButtonReturnShowTimeout: 3
+    WinText: YOU WIN!
+    LoseText: You lose...
+    FieldHeight: 20
+    FieldWidth: 16
+    BallMaxSpeed: 1
+    BallVelocity: 0.01
+    BallDiameter: 1
+    BoardMaxSpeed: 1
+    BoardVelocity: 0.01
+    BoardWidth: 4
+    BoardHeight: 0.4
+    BoardShiftPosY: 0.2
+    BonusGeneratingTimeout: 5
+    BonusOnFieldLimit: 1
+    BonusDiameter: 1
