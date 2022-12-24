@@ -6,8 +6,9 @@ public class BallNetworkController : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        gameObject.AddComponent<BallMoveController>();
-    }
+        if (!IsHost)
+            Destroy(gameObject.GetComponent<BallMoveController>());
+    }   
 
     private void Update()
     {

@@ -5,7 +5,8 @@
         None = 0,
         MainMenu = 1,
         Matchmaking = 2,
-        Gameplay = 3,
-        EndGame = 4
+        PlayersReady = 3,
+        Gameplay = 4,
+        EndGame = 5
     }
 }

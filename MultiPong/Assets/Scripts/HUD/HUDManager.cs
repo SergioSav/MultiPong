@@ -35,6 +35,9 @@ namespace Assets.Scripts.HUD
                 case GameState.Matchmaking:
                     ShowMatchmacking();
                     break;
+                case GameState.PlayersReady:
+                    _matchmakingView.HandlePlayersReady();
+                    break;
                 case GameState.Gameplay:
                     ShowMatch();
                     break;

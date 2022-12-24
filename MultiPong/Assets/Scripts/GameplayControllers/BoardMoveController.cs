@@ -1,53 +1,31 @@
 using Assets.Scripts.Data;
-using System;
-using System.Collections;
 using UnityEngine;
 
-public class BoardMoveController : MonoBehaviour, IPosition
+public class BoardMoveController : MonoBehaviour
 {
     private float _currentSpeed;
-    private float _halfBoardWidth;
     private GameSettings _settings;
     private float _boardMoveMaxSpeed;
     private float _boardVelocity;
-    private float _changeSizeEffectDuration;
-    private IEnumerator _resizeCoroutine;
+    private BoardNetworkController _netController;
 
-    public float PosX => transform.position.x;
-    public float PosY => transform.position.y;
-
-    public void Setup(GameSettings settings)
+    private void Start()
     {
-        _settings = settings;
-        _boardMoveMaxSpeed = settings.BoardMaxSpeed;
-        _boardVelocity = settings.BoardVelocity;
-        _halfBoardWidth = settings.BoardWidth / 2;
-    }
+        _settings = GameSource.Instance.Settings;
+        _boardMoveMaxSpeed = _settings.BoardMaxSpeed;
+        _boardVelocity = _settings.BoardVelocity;
 
-    public void ChangeSize(float multiplier, float duration)
-    {
-        if (_resizeCoroutine != null)
-            StopCoroutine(_resizeCoroutine);
-
-        _halfBoardWidth = _settings.BoardWidth / 2 * multiplier;
-        _changeSizeEffectDuration = duration;
-
-        _resizeCoroutine = ResizeTimeout();
-        StartCoroutine(_resizeCoroutine);
-    }
-
-    private IEnumerator ResizeTimeout()
-    {
-        yield return new WaitForSeconds(_changeSizeEffectDuration);
-        _halfBoardWidth = _settings.BoardWidth / 2;
+        _netController = GetComponent<BoardNetworkController>();
     }
 
     private void Update()
     {
-        transform.localScale = new Vector3(_halfBoardWidth * 2, _settings.BoardHeight, 1f);
+        transform.localScale = new Vector3(_netController.HalfWidth * 2, _settings.BoardHeight, 1f);
 
         var mousePosX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
-        var clampedMousePosX = Mathf.Clamp(mousePosX, -8 + _halfBoardWidth, 8 - _halfBoardWidth);
+        var clampedMousePosX = Mathf.Clamp(mousePosX, 
+            -_settings.FieldWidth * 0.5f + _netController.HalfWidth, 
+            _settings.FieldWidth * 0.5f - _netController.HalfWidth);
 
         _currentSpeed = Mathf.Clamp(_currentSpeed + _boardVelocity * Time.deltaTime, 0, _boardMoveMaxSpeed);
         if (transform.position.x == clampedMousePosX)

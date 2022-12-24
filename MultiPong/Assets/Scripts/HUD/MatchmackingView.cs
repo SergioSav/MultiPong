@@ -32,13 +32,10 @@ namespace Assets.Scripts.HUD
             gameObject.SetActive(true);
             _matchStartPanel.SetActive(false);
             _searchingPlayersPanel.SetActive(true);
-
-            StartCoroutine(DebugTimeoutCoroutine());
         }
 
-        private IEnumerator DebugTimeoutCoroutine()
+        public void HandlePlayersReady()
         {
-            yield return new WaitForSeconds(3);
             OnMatchmakingDone();
         }
 

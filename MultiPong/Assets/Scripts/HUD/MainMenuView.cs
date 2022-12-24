@@ -23,7 +23,8 @@ namespace Assets.Scripts.HUD
         {
             _startMatchButton.onClick.AddListener(OnStartMatchAsHostClick);
             _joinMatchButton.onClick.AddListener(OnStartMatchAsClientClick);
-            _startPracticeButton.onClick.AddListener(OnStartPracticeClick);
+            _startPracticeButton.gameObject.SetActive(false); // practice broken for now
+            //_startPracticeButton.onClick.AddListener(OnStartPracticeClick);
         }
 
         private void OnStartPracticeClick()

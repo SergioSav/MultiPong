@@ -1,32 +1,39 @@
+using Assets.Scripts.Data;
 using Assets.Scripts.Models;
 using System.Collections;
+using System.Linq;
+using Unity.Netcode;
 using UnityEngine;
 
-public class BonusController : MonoBehaviour, IPosition
+public class BonusController : NetworkBehaviour
 {
+    private NetworkVariable<int> _modelId = new NetworkVariable<int>(writePerm: NetworkVariableWritePermission.Owner);
+
     [SerializeField] private Renderer _iconRenderer;
     private BonusModel _model;
-    private bool _canBeCaptured;
-
-    public float PosX => transform.position.x;
-    public float PosY => transform.position.y;
-
-    public bool CanBeCaptured => _canBeCaptured;
-
-    public BonusModel Model=> _model;
 
     public void Setup(BonusModel model)
     {
         _model = model;
     }
 
-    public void HandleCapture()
+    public override void OnNetworkSpawn()
     {
-        Destroy(gameObject);
+        if (IsHost)
+        {
+            _modelId.Value = _model.Id;
+            _model.NetId = NetworkObjectId;
+        }
     }
 
     private void Start()
     {
+        if (_model == null)
+        {
+            _model = GameSource.Instance.BonusModels
+                            .Where(b => b.Id == _modelId.Value)
+                            .FirstOrDefault();
+        }
         _iconRenderer.material = _model.IconMaterial;
         StartCoroutine(AppearEffects());
     }
@@ -34,6 +41,6 @@ public class BonusController : MonoBehaviour, IPosition
     private IEnumerator AppearEffects()
     {
         yield return new WaitForSeconds(0.5f);
-        _canBeCaptured = true;
+        _model.CanBeCaptured = true;
     }
 }

@@ -22,7 +22,7 @@ namespace Assets.Scripts.HUD
 
         private void OnScoreChange()
         {
-            SetScore(_gameModel.PlayerScore, _gameModel.OpponentScore);
+            SetScore(_gameModel.PlayerOneScore, _gameModel.PlayerTwoScore);
         }
 
         public void Hide()
@@ -39,19 +39,6 @@ namespace Assets.Scripts.HUD
         private void SetScore(int playerOneScore, int playerTwoScore)
         {
             _textScore.text = $"{playerOneScore}:{playerTwoScore}";
-        }
-
-        private void Update()
-        {
-            // TODO: temp hack
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    _gameModel.AddScoreToPlayer();
-                }
-                _gameModel.EndMatch();
-            }
         }
     }
 }

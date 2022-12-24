@@ -1,11 +1,17 @@
-using Assets.Scripts;
 using Assets.Scripts.Data;
+using Assets.Scripts.Services;
 using Assets.Scripts.Utils;
-using System;
 using System.Collections;
 using UnityEngine;
 
-public class BallMoveController : MonoBehaviour, IPosition
+public struct BallContext
+{
+    public GameSettings Settings;
+    public GameplayService GameplayService;
+    public RandomProvider RandomProvider;
+}
+
+public class BallMoveController : MonoBehaviour
 {
     private Vector3 _direction;
     private float _currentSpeed;
@@ -13,19 +19,21 @@ public class BallMoveController : MonoBehaviour, IPosition
     private float _velocity;
 
     private bool _needMove;
-    private Game _game;
     private GameSettings _settings;
+    private GameplayService _gameplayService;
     private RandomProvider _randomProvider;
     private float _speedUpEffectDuration;
 
     public float PosX => transform.position.x;
     public float PosY => transform.position.y;
 
-    public void Setup(Game game, GameSettings settings, RandomProvider randomProvider)
+    public bool HasPositiveDirection => _direction.y > 0;
+
+    public void Setup(BallContext context)
     {
-        _game = game;
-        _settings = settings;
-        _randomProvider = randomProvider;
+        _settings = context.Settings;
+        _gameplayService = context.GameplayService;
+        _randomProvider = context.RandomProvider;
     }
     public void ResetToInitialValues()
     {
@@ -67,8 +75,7 @@ public class BallMoveController : MonoBehaviour, IPosition
 
     private void UpdateDirection()
     {
-        // TODO: update direction after collision
-        if (_game.TryGetObstacleNormalVector(transform.position, out var obstacleNormalVector))
+        if (_gameplayService.TryGetObstacleNormalVector(transform.position, out var obstacleNormalVector))
         {
             _direction = Vector3.Reflect(_direction, obstacleNormalVector);
         }

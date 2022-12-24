@@ -7,6 +7,7 @@ namespace Assets.Scripts.Data
     public class GameSettings
     {
         [Header("Game settings")]
+        public int PlayersCount = 2;
         public int WinScore = 10;
         public int MatchStartTimeout = 3;
         public int ButtonReturnShowTimeout = 3;
@@ -33,5 +34,8 @@ namespace Assets.Scripts.Data
         public float BonusGeneratingTimeout = 5f;
         public int BonusOnFieldLimit = 2;
         public float BonusDiameter = 1f;
+
+        [Header("Connection settings")]
+        public ushort ConnectionPort = 1234;
     }
 }

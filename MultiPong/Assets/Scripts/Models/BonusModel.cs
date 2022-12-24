@@ -12,5 +12,12 @@ namespace Assets.Scripts.Models
         public BonusType BonusType;
         public float EffectValue;
         public float EffectDuration;
+
+        [HideInInspector]
+        public float PosX;
+        [HideInInspector]
+        public bool CanBeCaptured;
+        [HideInInspector]
+        public ulong NetId;
     }
 }

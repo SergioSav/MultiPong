@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: GameSettingsScriptableObject
   m_EditorClassIdentifier: 
   GameSettings:
+    PlayersCount: 2
     WinScore: 10
     MatchStartTimeout: 3
     ButtonReturnShowTimeout: 3
@@ -30,4 +31,5 @@ MonoBehaviour:
     BoardShiftPosY: 0.2
     BonusGeneratingTimeout: 5
     BonusOnFieldLimit: 1
-    BonusDiameter: 1
+    BonusDiameter: 1.5
+    ConnectionPort: 1234

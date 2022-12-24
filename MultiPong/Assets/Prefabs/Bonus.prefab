@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 4728363676994101032}
   - component: {fileID: 6136136103900509117}
   - component: {fileID: -735803746122977376}
+  - component: {fileID: 7739006149596707707}
   m_Layer: 0
   m_Name: Bonus
   m_TagString: Untagged
@@ -177,3 +178,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _iconRenderer: {fileID: 4353578215103702356}
+--- !u!114 &7739006149596707707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8355751659170937455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
