@@ -15,7 +15,6 @@ public class BoardNetworkController : NetworkBehaviour
 
     public float HalfWidth => _halfBoardWidth;
     public float PosX => transform.position.x;
-    public float PosY => transform.position.y;
 
     public override void OnNetworkSpawn()
     {
@@ -27,20 +26,23 @@ public class BoardNetworkController : NetworkBehaviour
         transform.position = new Vector3(0, _yPos);
     }
 
-    public void ChangeSize(float multiplier, float duration)
+    [ClientRpc]
+    public void ChangeSizeClientRpc(float multiplier, float duration)
     {
+        if (!IsOwner)
+            return;
         if (_resizeCoroutine != null)
             StopCoroutine(_resizeCoroutine);
-
         _halfBoardWidth = GameSource.Instance.Settings.BoardWidth / 2 * multiplier;
         _changeSizeEffectDuration = duration;
-
         _resizeCoroutine = ResizeTimeout();
         StartCoroutine(_resizeCoroutine);
     }
 
     private IEnumerator ResizeTimeout()
     {
+        if (!IsOwner)
+            yield return null;
         yield return new WaitForSeconds(_changeSizeEffectDuration);
         _halfBoardWidth = GameSource.Instance.Settings.BoardWidth / 2;
     }
@@ -55,7 +57,7 @@ public class BoardNetworkController : NetworkBehaviour
         else
         {
             transform.position = new Vector3(_xPos.Value, _yPos, 0);
-            transform.localScale = new Vector3(_halfBoardWidthNet.Value * 2, GameSource.Instance.Settings.BoardHeight, 1f);
+            transform.localScale = new Vector3(_halfBoardWidthNet.Value * 2f, GameSource.Instance.Settings.BoardHeight, 1f);
         }
     }
 }

@@ -13,6 +13,7 @@ public struct BallContext
 
 public class BallMoveController : MonoBehaviour
 {
+    private Vector3 _cachedObstacleNormalVector;
     private Vector3 _direction;
     private float _currentSpeed;
     private float _maxSpeed;
@@ -38,6 +39,7 @@ public class BallMoveController : MonoBehaviour
     public void ResetToInitialValues()
     {
         transform.position = Vector3.zero;
+        _cachedObstacleNormalVector = Vector3.zero;
 
         _randomProvider.GetRandom(-1f, 1f, out var randomX);
         _randomProvider.GetRandom(-1f, 1f, out var randomY);
@@ -77,6 +79,9 @@ public class BallMoveController : MonoBehaviour
     {
         if (_gameplayService.TryGetObstacleNormalVector(transform.position, out var obstacleNormalVector))
         {
+            if (obstacleNormalVector == _cachedObstacleNormalVector)
+                return;
+            _cachedObstacleNormalVector = obstacleNormalVector;
             _direction = Vector3.Reflect(_direction, obstacleNormalVector);
         }
     }

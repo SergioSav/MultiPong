@@ -3,6 +3,7 @@ using Assets.Scripts.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Netcode;
 
 namespace Assets.Scripts.Models
 {
@@ -123,21 +124,22 @@ namespace Assets.Scripts.Models
             ScoreChange?.Invoke();
         }
 
+        [ServerRpc]
         public void ApplyChangeSizeEffect(float multiplier, float duration)
         {
             if (multiplier >= 1)
             {
                 if (MatchData.SpawnedBall.HasPositiveDirection)
-                    MatchData.PlayerOneBoard.ChangeSize(multiplier, duration);
+                    MatchData.PlayerOneBoard.ChangeSizeClientRpc(multiplier, duration);
                 else
-                    MatchData.PlayerTwoBoard.ChangeSize(multiplier, duration);
+                    MatchData.PlayerTwoBoard.ChangeSizeClientRpc(multiplier, duration);
             }
             else
             {
                 if (MatchData.SpawnedBall.HasPositiveDirection)
-                    MatchData.PlayerTwoBoard.ChangeSize(multiplier, duration);
+                    MatchData.PlayerTwoBoard.ChangeSizeClientRpc(multiplier, duration);
                 else
-                    MatchData.PlayerOneBoard.ChangeSize(multiplier, duration);
+                    MatchData.PlayerOneBoard.ChangeSizeClientRpc(multiplier, duration);
             }
         }
 
